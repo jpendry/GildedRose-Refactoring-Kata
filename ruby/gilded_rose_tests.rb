@@ -86,4 +86,28 @@ class TestUntitled < Test::Unit::TestCase
     assert_equal -1, items[0].sell_in
     assert_equal 0, items[0].quality
   end
+
+  def test_conjured_items
+    # Items degrade twice as fast
+    items = [Item.new('Conjured Mana Cake', 20, 10)]
+    GildedRose.new(items).update_quality
+    assert_equal 19, items[0].sell_in
+    assert_equal 8, items[0].quality
+
+    items = [Item.new('Conjured Mana Cake', 0, 10)]
+    GildedRose.new(items).update_quality
+    assert_equal -1, items[0].sell_in
+    assert_equal 6, items[0].quality
+
+    # Quality never decreases below 0
+    items = [Item.new('Conjured Mana Cake', 10, 0)]
+    GildedRose.new(items).update_quality
+    assert_equal 9, items[0].sell_in
+    assert_equal 0, items[0].quality
+
+    items = [Item.new('Conjured Mana Cake', 10, 1)]
+    GildedRose.new(items).update_quality
+    assert_equal 9, items[0].sell_in
+    assert_equal 0, items[0].quality
+  end
 end
