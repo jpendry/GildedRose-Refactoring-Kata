@@ -39,21 +39,14 @@ class GildedRose
           item.quality = item.quality + 1
         end
       when "Conjured Mana Cake"
-        if item.quality > 0
-          if item.sell_in > 0
-            item.quality = item.quality - 2
-            item.sell_in = item.sell_in - 1
-          else
-            item.quality = item.quality - 4
-            item.sell_in = item.sell_in - 1
-          end
+        if item.sell_in > 0
+          item.quality = item.quality - 2
+          item.sell_in = item.sell_in - 1
         else
-          if item.sell_in > 0
-            item.sell_in = item.sell_in - 1
-          else
-            item.sell_in = item.sell_in - 1
-          end
+          item.quality = item.quality - 4
+          item.sell_in = item.sell_in - 1
         end
+        item.quality = 0 if item.quality < 0
       else
         if item.quality > 0
           item.quality = item.quality - 1
